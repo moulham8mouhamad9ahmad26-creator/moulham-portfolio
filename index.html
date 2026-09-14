@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملهم أحمد | Web & App Development</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0914;
+            --card-bg: rgba(22, 19, 38, 0.7);
+            --primary: #8a2be2; 
+            --secondary: #00d2ff; 
+            --accent: #50c878; 
+            --text-main: #ffffff;
+            --text-muted: #b8b8d0;
+            --border-glow: rgba(138, 43, 226, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 210, 255, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            padding-bottom: 50px;
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 35px 20px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--accent));
+        }
+
+        .logo-container {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            font-weight: 900;
+            color: #fff;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .name-ar { font-size: 26px; font-weight: 700; margin-bottom: 5px; }
+        .name-en { font-size: 16px; color: var(--secondary); font-weight: 600; margin-bottom: 12px; }
+        .tagline {
+            font-size: 14px;
+            color: var(--accent);
+            background: rgba(80, 200, 120, 0.1);
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+            border: 1px solid rgba(80, 200, 120, 0.3);
+            font-weight: 600;
+        }
+        .bio { font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 90%; margin: 0 auto; }
+
+        .social-links { width: 100%; display: flex; flex-direction: column; gap: 14px; }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 20px;
+            border-radius: 16px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        .social-btn i { font-size: 20px; }
+        .social-btn.youtube:hover { background: rgba(255, 0, 0, 0.15); border-color: #ff0000; }
+        .social-btn.youtube i { color: #ff0000; }
+        .social-btn.instagram:hover { background: rgba(225, 48, 108, 0.15); border-color: #e1306c; }
+        .social-btn.instagram i { color: #e1306c; }
+        .social-btn.facebook:hover { background: rgba(24, 119, 242, 0.15); border-color: #1877f2; }
+        .social-btn.facebook i { color: #1877f2; }
+        .btn-content { display: flex; align-items: center; gap: 15px; }
+
+        .projects-section { width: 100%; display: flex; flex-direction: column; gap: 15px; }
+        .section-title { font-size: 18px; font-weight: 700; color: var(--secondary); display: flex; align-items: center; gap: 8px; }
+        .projects-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        .project-img { width: 100%; height: 180px; object-fit: cover; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .project-info { padding: 15px; }
+        .project-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+        .project-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .login-card {
+            background: #161326;
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .login-card h3 { color: var(--secondary); font-size: 18px; margin-bottom: 5px; }
+        .login-card p { color: var(--text-muted); font-size: 12px; margin-bottom: 10px; }
+
+        .admin-box {
+            display: none;
+            background: rgba(138, 43, 226, 0.1);
+            border: 1px dashed var(--primary);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .admin-header-flex { display: flex; justify-content: space-between; align-items: center; }
+        .admin-box h3 { font-size: 15px; color: var(--secondary); display: flex; align-items: center; gap: 6px; }
+
+        .logout-btn {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(255,0,0,0.3);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(11, 9, 20, 0.8);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: var(--text-main);
+            font-size: 13px;
+            outline: none;
+        }
+        textarea.form-control { resize: vertical; min-height: 70px; }
+
+        .file-input-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; }
+        .file-input-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
+        .file-btn { display: block; width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 10px; border-radius: 10px; text-align: center; font-size: 13px; color: var(--text-muted); cursor: pointer; }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 14px;
+        }
+        .cancel-btn {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .delete-btn {
+            background: rgba(255, 0, 0, 0.2); color: #ff6b6b; border: 1px solid rgba(255,0,0,0.3); padding: 6px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; margin-top: 10px;
+        }
+
+        footer {
+            margin-top: 20px; text-align: center; font-size: 13px; color: var(--text-muted);
+            display: flex; flex-direction: column; gap: 10px; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; width: 100%;
+        }
+        .footer-socials { display: flex; gap: 15px; font-size: 16px; }
+        .footer-socials a { color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="profile-card">
+            <!-- اضغط 3 مرات سريعة هنا لتفتح لك خانة كلمة المرور (مخفية عن الزوار) -->
+            <div class="logo-container" id="secretLogo" title="MA">MA</div>
+            <h1 class="name-ar">ملهم أحمد</h1>
+            <div class="name-en">Moulham Ahmad</div>
+            <div class="tagline">web & App Development | content creator</div>
+            <p class="bio">أشارك رحلتي في تطوير المواقع والتطبيقات من الأساسيات وحتى بناء مشاريع حقيقية</p>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="https://www.youtube.com/@MoulhammAhmad" target="_blank" class="social-btn youtube">
+                <div class="btn-content">
+                    <i class="fa-brands fa-youtube"></i>
+                    <span>قناة اليوتيوب</span>
+                </div>
+                <i class="fa-solid fa-chevron-left" style="font-size: 12px; opacity: 0.6;"></i>
+            </a>
+            <a href="https://www.instagram.com/mouham.ahmad1?stkn=MXA2MXZnZWF2engzNQ==" target="_blank" class="social-btn instagram">
+                <div class="btn-content">
+                    <i class="fa-brands fa-instagram"></i>
+                    <span>صفحة الانستغرام</span>
+                </div>
+                <i class="fa-solid fa-chevron-left" style="font-size: 12px; opacity: 0.6;"></i>
+            </a>
+            <a href="https://www.facebook.com/share/1BFCRRVY5h/" target="_blank" class="social-btn facebook">
+                <div class="btn-content">
+                    <i class="fa-brands fa-facebook"></i>
+                    <span>صفحة الفيسبوك</span>
+                </div>
+                <i class="fa-solid fa-chevron-left" style="font-size: 12px; opacity: 0.6;"></i>
+            </a>
+        </div>
+
+        <!-- Projects Gallery -->
+        <div class="projects-section">
+            <div class="section-title">
+                <i class="fa-solid fa-code"></i> معرض مشاريع البرمجة
+            </div>
+            <div class="projects-grid" id="projectsContainer">
+                <!-- يتم تعبئة المشاريع هنا -->
+            </div>
+        </div>
+
+        <!-- Admin Box (Hidden by default) -->
+        <div class="admin-box" id="adminBoxPanel">
+            <div class="admin-header-flex">
+                <h3><i class="fa-solid fa-plus-circle"></i> لوحة التحكم</h3>
+                <button class="logout-btn" onclick="adminLogout()">تسجيل خروج</button>
+            </div>
+            <input type="text" id="projectTitleInput" class="form-control" placeholder="عنوان المشروع">
+            <textarea id="projectDescInput" class="form-control" placeholder="وصف المشروع..."></textarea>
+            <div class="file-input-wrapper">
+                <div class="file-btn" id="fileLabelText"><i class="fa-solid fa-image"></i> اختر صورة المشروع</div>
+                <input type="file" id="projectImageInput" accept="image/*">
+            </div>
+            <button class="submit-btn" onclick="addNewProject()">نشر المشروع</button>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-socials">
+                <a href="https://www.instagram.com/mouham.ahmad1?stkn=MXA2MXZnZWF2engzNQ==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@MoulhammAhmad" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.facebook.com/share/1BFCRRVY5h/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+            <div>Moulham Ahmad. All Rights Reserved.</div>
+        </footer>
+    </div>
+
+    <!-- Custom Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-card">
+            <h3>تسجيل دخول المشرف</h3>
+            <p>أدخل كلمة المرور الخاصة بلوحة التحكم</p>
+            <input type="password" id="adminPasswordInput" class="form-control" placeholder="كلمة المرور...">
+            <button class="submit-btn" onclick="checkPassword()">دخول</button>
+            <button class="cancel-btn" onclick="closeLoginModal()">إلغاء</button>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASS = "Moulham2026";
+        let clickCount = 0;
+        let clickTimer = null;
+
+        if (sessionStorage.getItem('moulham_admin_unlocked') === 'true') {
+            document.getElementById('adminBoxPanel').style.display = 'flex';
+        }
+
+        document.getElementById('secretLogo').addEventListener('click', function() {
+            if (sessionStorage.getItem('moulham_admin_unlocked') === 'true') return;
+
+            clickCount++;
+            if (clickCount === 1) {
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, 600);
+            } else if (clickCount === 3) {
+                clearTimeout(clickTimer);
+                clickCount = 0;
+                document.getElementById('loginModal').style.display = 'flex';
+                document.getElementById('adminPasswordInput').value = '';
+            }
+        });
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function checkPassword() {
+            const enteredPass = document.getElementById('adminPasswordInput').value.trim();
+            if (enteredPass === ADMIN_PASS) {
+                sessionStorage.setItem('moulham_admin_unlocked', 'true');
+                document.getElementById('adminBoxPanel').style.display = 'flex';
+                closeLoginModal();
+                loadProjects();
+                alert('تم تسجيل الدخول بنجاح!');
+            } else {
+                alert('كلمة المرور غير صحيحة!');
+            }
+        }
+
+        function adminLogout() {
+            sessionStorage.removeItem('moulham_admin_unlocked');
+            document.getElementById('adminBoxPanel').style.display = 'none';
+            loadProjects();
+            alert('تم تسجيل الخروج بنجاح.');
+        }
+
+        const imageInput = document.getElementById('projectImageInput');
+        const fileLabelText = document.getElementById('fileLabelText');
+
+        if(imageInput) {
+            imageInput.addEventListener('change', function() {
+                if (imageInput.files && imageInput.files[0]) {
+                    fileLabelText.innerHTML = `<i class="fa-solid fa-check" style="color:var(--accent)"></i> تم اختيار: ${imageInput.files[0].name}`;
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadProjects);
+
+        function loadProjects() {
+            const projectsContainer = document.getElementById('projectsContainer');
+            const savedProjects = JSON.parse(localStorage.getItem('moulham_projects')) || [];
+
+            projectsContainer.innerHTML = '';
+
+            if(savedProjects.length === 0) {
+                projectsContainer.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:13px; padding: 10px;">لم يتم إضافة مشاريع بعد.</p>`;
+                return;
+            }
+
+            const isAdmin = sessionStorage.getItem('moulham_admin_unlocked') === 'true';
+
+            savedProjects.forEach((proj, index) => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.innerHTML = `
+                    <img src="${proj.image}" class="project-img" alt="${proj.title}">
+                    <div class="project-info">
+                        <div class="project-title">${proj.title}</div>
+                        <div class="project-desc">${proj.desc}</div>
+                        ${isAdmin ? `<button class="delete-btn" onclick="deleteProject(${index})"><i class="fa-solid fa-trash"></i> حذف</button>` : ''}
+                    </div>
+                `;
+                projectsContainer.appendChild(card);
+            });
+        }
+
+        function addNewProject() {
+            const titleInput = document.getElementById('projectTitleInput');
+            const descInput = document.getElementById('projectDescInput');
+
+            const title = titleInput.value.trim();
+            const desc = descInput.value.trim();
+
+            if (!title || !desc || !imageInput.files[0]) {
+                alert('الرجاء تعبئة العنوان والوصف واختيار صورة.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Image = e.target.result;
+                const newProject = { title, desc, image: base64Image };
+
+                const savedProjects = JSON.parse(localStorage.getItem('moulham_projects')) || [];
+                savedProjects.unshift(newProject);
+                localStorage.setItem('moulham_projects', JSON.stringify(savedProjects));
+
+                titleInput.value = '';
+                descInput.value = '';
+                imageInput.value = '';
+                fileLabelText.innerHTML = `<i class="fa-solid fa-image"></i> اختر صورة المشروع`;
+
+                loadProjects();
+                alert('تم نشر المشروع بنجاح!');
+            };
+
+            reader.readAsDataURL(imageInput.files[0]);
+        }
+
+        function deleteProject(index) {
+            if (confirm('هل أنت متأكد من الحذف؟')) {
+                const savedProjects = JSON.parse(localStorage.getItem('moulham_projects')) || [];
+                savedProjects.splice(index, 1);
+                localStorage.setItem('moulham_projects', JSON.stringify(savedProjects));
+                loadProjects();
+            }
+        }
+    </script>
+</body>
+</html>
